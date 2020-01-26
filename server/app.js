@@ -6,6 +6,10 @@ const path = require('path');
 
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.get('/first', (req, res) => {
+    res.send('hello Ajax')
+})
+
 
 app.listen('3000');
 console.log('服务器启动成功');
