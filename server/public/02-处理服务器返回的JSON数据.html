@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var xhr = new XMLHttpRequest();
+        //需要在浏览器中访问静态地址，直接运行html文件会报跨域错误
+        //Access to XMLHttpRequest at 'http://localhost:3000/first' from origin 'null' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+        xhr.open('get', 'http://localhost:3000/responseText');
+        xhr.send();
+        xhr.onload = function() {
+            // console.log(xhr.responseText);
+            var responseData = JSON.parse(xhr.responseText);
+            // var h = document.createElement('h2')
+            // var txt = document.createTextNode(responseData.name)
+            // h.appendChild(txt)
+            // document.body.appendChild(h)
+            var str = '<h2>' + responseData.name + '</h2>'
+            document.body.innerHTML = str
+
+        }
+    </script>
+</body>
+
+</html>
