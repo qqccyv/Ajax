@@ -12,6 +12,8 @@ app.get('/first', (req, res) => {
 app.get('/responseText', (req, res) => {
     res.send({ "name": "dengyu" })
 })
-
+app.get('/get', (req, res) => {
+    res.send(req.query)
+})
 app.listen('3000');
 console.log('服务器启动成功');
