@@ -23,5 +23,8 @@ app.post('/post', (req, res) => {
 app.post('/json', (req, res) => {
     res.send(req.body)
 })
+app.post('/readystate', (req, res) => {
+    res.send('hello state')
+})
 app.listen('3000');
 console.log('服务器启动成功');
