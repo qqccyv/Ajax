@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser')
-
+const fs = require('fs')
 const path = require('path');
 
 
@@ -28,6 +28,11 @@ app.post('/readystate', (req, res) => {
 })
 app.get('/error', (req, res) => {
     res.status(400).send('not ok')
+})
+app.get('/cache', (req, res) => {
+    fs.readFile('./test.txt', 'utf8', (err, data) => {
+        res.send(data)
+    })
 })
 app.listen('3000');
 console.log('服务器启动成功');

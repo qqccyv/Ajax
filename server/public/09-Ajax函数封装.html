@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function ajax(options) {
+            var xhr = new XMLHttpRequest();
+            xhr.open(options.type, options.url);
+            xhr.send();
+            xhr.onload = function() {
+                options.succes(xhr.responseText)
+            }
+        }
+        ajax({
+            type: 'get',
+            url: 'http://localhost:3000/cache',
+            succes: function(data) {
+                console.log(data);
+
+            }
+        })
+    </script>
+</body>
+
+</html>
