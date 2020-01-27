@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">提交Ajax请求</button>
+</body>
+<script>
+    var btn = document.getElementById('btn');
+    btn.onclick = function() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', 'http://localhost:3000/error')
+        xhr.send();
+        xhr.onload = function() {
+            if (xhr.status == 400) {
+                console.log(xhr.responseText);
+
+                alert('请求不正确')
+
+            }
+
+        }
+        xhr.onerror = function() {
+            alert('网络中断，无法发送请求')
+        }
+    }
+</script>
+
+</html>

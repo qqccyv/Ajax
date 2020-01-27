@@ -26,5 +26,8 @@ app.post('/json', (req, res) => {
 app.post('/readystate', (req, res) => {
     res.send('hello state')
 })
+app.get('/error', (req, res) => {
+    res.status(400).send('not ok')
+})
 app.listen('3000');
 console.log('服务器启动成功');
