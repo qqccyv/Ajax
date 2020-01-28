@@ -9,8 +9,8 @@ const path = require('path');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/first', (req, res) => {
-    res.send('hello Ajax')
+app.post('/first', (req, res) => {
+    res.status(400).send('hello Ajax')
 })
 app.get('/responseText', (req, res) => {
     res.send({ "name": "dengyu" })

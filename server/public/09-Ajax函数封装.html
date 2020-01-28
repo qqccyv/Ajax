@@ -36,12 +36,17 @@
 
             }
             xhr.onload = function() {
-                options.succes(xhr.responseText)
+                if (xhr.status == 200) {
+                    options.succes(xhr.responseText, xhr)
+
+                } else {
+                    options.error(xhr.responseText, xhr)
+                }
             }
         }
         ajax({
             type: 'post',
-            url: 'http://localhost:3000/cache',
+            url: 'http://localhost:3000/first',
             data: {
                 name: 'dengyu',
                 age: 29
@@ -51,6 +56,10 @@
             },
             succes: function(data) {
                 console.log(data);
+
+            },
+            error: function(data, xhr) {
+                console.log('这是error函数' + data, xhr);
 
             }
         })
