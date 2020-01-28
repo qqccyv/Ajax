@@ -5,7 +5,8 @@ const fs = require('fs')
 const path = require('path');
 
 
-app.use(bodyParser.json())
+// app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/first', (req, res) => {
@@ -30,9 +31,10 @@ app.get('/error', (req, res) => {
     res.status(400).send('not ok')
 })
 app.get('/cache', (req, res) => {
-    fs.readFile('./test.txt', 'utf8', (err, data) => {
-        res.send(data)
-    })
+    // fs.readFile('./test.txt', 'utf8', (err, data) => {
+    //     res.send(data)
+    // })
+    res.send(req.query)
 })
 app.listen('3000');
 console.log('服务器启动成功');

@@ -12,15 +12,34 @@
     <script>
         function ajax(options) {
             var xhr = new XMLHttpRequest();
+            var params = '';
+            for (var attr in options.data) {
+                params += attr + '=' + options.data[attr] + '&'
+            }
+            params = params.substr(0, params.length - 1)
+            if (options.type == 'get') {
+                options.url = options.url + '?' + params
+            }
             xhr.open(options.type, options.url);
-            xhr.send();
+            if (options.type == 'post') {
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+                xhr.send(params);
+
+            } else {
+                xhr.send();
+
+            }
             xhr.onload = function() {
                 options.succes(xhr.responseText)
             }
         }
         ajax({
-            type: 'get',
+            type: 'post',
             url: 'http://localhost:3000/cache',
+            data: {
+                name: 'dengyu',
+                age: 29
+            },
             succes: function(data) {
                 console.log(data);
 
