@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../js/template-web.js"></script>
+</head>
+
+<body>
+    <div class="container"></div>
+</body>
+<script id="tpl" type="text/html">
+    <h1>{{username}}{{age}}</h1>
+</script>
+<script>
+    let html = template('tpl', {
+        username: 'dengyu',
+        age: 29
+    })
+    console.log(html);
+
+    document.querySelector('.container').innerHTML = html
+</script>
+
+</html>
