@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.post('/first', (req, res) => {
     res.status(400).send('hello Ajax')
 })
-app.get('/responseText', (req, res) => {
+app.post('/responseText', (req, res) => {
     res.send({ "name": "dengyu" })
 })
 app.get('/get', (req, res) => {

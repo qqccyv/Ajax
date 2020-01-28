@@ -36,17 +36,22 @@
 
             }
             xhr.onload = function() {
+                let contentType = xhr.getResponseHeader('Content-Type');
+                let responseText = xhr.responseText
+                if (contentType.includes('application/json')) {
+                    responseText = JSON.parse(xhr.responseText)
+                }
                 if (xhr.status == 200) {
-                    options.succes(xhr.responseText, xhr)
+                    options.succes(responseText, xhr)
 
                 } else {
-                    options.error(xhr.responseText, xhr)
+                    options.error(responseText, xhr)
                 }
             }
         }
         ajax({
             type: 'post',
-            url: 'http://localhost:3000/first',
+            url: 'http://localhost:3000/responseText',
             data: {
                 name: 'dengyu',
                 age: 29
@@ -59,7 +64,9 @@
 
             },
             error: function(data, xhr) {
-                console.log('这是error函数' + data, xhr);
+                console.log('这是error函数', xhr);
+                console.log(data);
+
 
             }
         })
