@@ -36,24 +36,33 @@
         var searchInp = document.querySelector('#search');
         var listbox = document.querySelector('#list-box');
         var tpl = document.querySelector('#tpl')
+        var timer = null;
         searchInp.oninput = function() {
             var key = this.value;
-            // console.log(key);
-            // listbox.style.display = 'none'
+            clearTimeout(timer)
+                // console.log(key);
+                // listbox.style.display = 'none'
+            if (key.trim().length == 0) {
+                listbox.style.display = 'none'
+                return;
 
-            ajax({
-                url: 'http://localhost:3000/searchAutoPrompt',
-                data: {
-                    key
-                },
-                success: function(result) {
-                    let html = template('tpl', {
-                        result
-                    })
-                    listbox.innerHTML = html;
-                    listbox.style.display = 'block'
-                }
-            })
+            }
+            timer = setTimeout(function() {
+                ajax({
+                    url: 'http://localhost:3000/searchAutoPrompt',
+                    data: {
+                        key
+                    },
+                    success: function(result) {
+                        let html = template('tpl', {
+                            result
+                        })
+                        listbox.innerHTML = html;
+                        listbox.style.display = 'block'
+                    }
+                })
+            }, 800)
+
         }
     </script>
 </body>
