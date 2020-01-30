@@ -6,19 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        .box {
+            width: 500px;
+            height: 30px;
+            border: 1px solid black;
+        }
+        
+        .bar {
+            height: 100%;
+            text-align: center;
+            line-height: 30px;
+            background-color: yellow;
+        }
+    </style>
 </head>
 
 <body>
     <label for="file">文件上传</label>
     <input type="file" id="file">
+    <div class="box">
+        <div class="bar" style="width: 0%;">0%</div>
+    </div>
 </body>
 <script>
     var file = document.querySelector('#file');
+    var bar = document.querySelector('.bar')
     file.onchange = function() {
         let formData = new FormData();
         formData.append('setFile', this.files[0]);
         let xhr = new XMLHttpRequest();
         xhr.open('post', 'http://localhost:3000/upload');
+        xhr.upload.onprogress = function(e) {
+            let result = (e.loaded / e.total) * 100 + '%'
+            bar.style.width = result
+            bar.innerHTML = result
+        }
         xhr.send(formData);
         xhr.onload = function() {
             if (xhr.status == 200) {
