@@ -19,6 +19,13 @@
         var form = document.querySelector('#form')
         btn.addEventListener('click', function() {
             let formData = new FormData(form)
+            console.log(formData);
+
+            console.log(formData.get('username'));
+            formData.set('age', 100)
+            formData.delete('password')
+            formData.append('username', 'dengyu')
+
             let xhr = new XMLHttpRequest();
             xhr.open('post', 'http://localhost:3000/formData');
             xhr.send(formData);
