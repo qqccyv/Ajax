@@ -2,7 +2,7 @@
 const express = require('express');
 // 路径处理模块
 const path = require('path');
-// const formidable = require('formidable');
+const formidable = require('formidable');
 // 创建web服务器
 const app = express();
 
