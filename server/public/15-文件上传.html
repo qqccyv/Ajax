@@ -28,10 +28,14 @@
     <div class="box">
         <div class="bar" style="width: 0%;">0%</div>
     </div>
+    <div class="previews">
+
+    </div>
 </body>
 <script>
     var file = document.querySelector('#file');
     var bar = document.querySelector('.bar')
+    var previews = document.querySelector('.previews')
     file.onchange = function() {
         let formData = new FormData();
         formData.append('setFile', this.files[0]);
@@ -45,7 +49,12 @@
         xhr.send(formData);
         xhr.onload = function() {
             if (xhr.status == 200) {
-                console.log(xhr.responseText);
+                // console.log(xhr.responseText);
+                let img = document.createElement('img');
+                img.src = JSON.parse(xhr.responseText).path;
+                img.onload = function() {
+                    previews.appendChild(img)
+                }
 
             }
         }

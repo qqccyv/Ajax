@@ -181,7 +181,9 @@ app.post('/upload', (req, res) => {
     form.keepExtensions = true;
     // 解析客户端传递过来的FormData对象
     form.parse(req, function(err, fields, files) {
-        res.send('ok')
+        res.send({
+            path: files.setFile.path.split('public')[1]
+        })
     });
     // 将客户端传递过来的文件地址响应到客户端
 
