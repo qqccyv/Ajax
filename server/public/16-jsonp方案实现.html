@@ -12,22 +12,33 @@
     <button>发送需求</button>
 </body>
 <script>
-    function fn(data) {
-        console.log('fn函数被调用了');
-        console.log(data);
+    // function fn(data) {
+    //     console.log('fn函数被调用了');
+    //     console.log(data);
 
-    }
+    // }
 </script>
 <script>
     var btn = document.querySelector('button');
     btn.addEventListener('click', function() {
+        jsonp({
+            url: 'http://localhost:3001/jsonp',
+            success: function(data) {
+                console.log('fn函数被调用了');
+                console.log(data);
+            }
+        })
+    })
+
+    function jsonp(options) {
         let script = document.createElement('script');
-        script.src = 'http://localhost:3001/jsonp?callback=fn'
+        window.fn = options.success
+        script.src = options.url + '?callback=fn'
         document.body.appendChild(script);
         script.onload = function() {
             document.body.removeChild(script)
         }
-    })
+    }
 </script>
 
 </html>
