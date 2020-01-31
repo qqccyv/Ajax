@@ -32,8 +32,11 @@
 
     function jsonp(options) {
         let script = document.createElement('script');
-        window.fn = options.success
-        script.src = options.url + '?callback=fn'
+        let funName = 'myJsonp' + Math.random().toString().replace('.', '')
+            // console.log(funName);
+
+        window[funName] = options.success
+        script.src = options.url + '?callback=' + funName
         document.body.appendChild(script);
         script.onload = function() {
             document.body.removeChild(script)
