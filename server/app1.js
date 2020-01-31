@@ -36,5 +36,9 @@ app.get('/cache', (req, res) => {
     // })
     res.send(req.query)
 })
-app.listen('3000');
+app.get('/jsonp', (req, res) => {
+    let result = req.query.callback
+    res.send(result + '({name: "dengyu"})')
+})
+app.listen('3001');
 console.log('服务器启动成功');
