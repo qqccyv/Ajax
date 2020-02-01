@@ -188,7 +188,18 @@ app.post('/upload', (req, res) => {
     // 将客户端传递过来的文件地址响应到客户端
 
 });
-
+app.get('/base', (req, res) => {
+    res.send({
+        name: 'dengyu',
+        age: 29
+    })
+})
+app.post('/base', (req, res) => {
+    res.send({
+        name: 'dengyu',
+        age: 30
+    })
+})
 
 // 监听端口
 app.listen(3000);
