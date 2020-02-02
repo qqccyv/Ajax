@@ -19,10 +19,24 @@
 <script>
     $(function() {
         $('#form').on('submit', () => {
-            let data = $('#form').serialize()
-            console.log(data);
+            // let data = $('#form').serialize()
+            // console.log(data);
+
+            console.log(serializeObject($('#form')));
+
             return false
         })
+
+        function serializeObject(data) {
+            let params = data.serializeArray();
+            let result = {}
+            $.each(params, function(index, value) {
+                // console.log(value);
+                result[value.name] = value.value
+
+            })
+            return result
+        }
     })
 </script>
 
