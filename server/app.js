@@ -9,7 +9,13 @@ const app = express();
 // 静态资源访问服务功能
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 邮箱地址验证
+
+app.get('/first', (req, res) => {
+        res.send({
+            name: 'dengyu'
+        })
+    })
+    // 邮箱地址验证
 app.get('/verifyEmailAdress', (req, res) => {
     // 接收客户端传递过来的邮箱地址
     const email = req.query.email;
