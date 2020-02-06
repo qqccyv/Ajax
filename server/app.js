@@ -5,12 +5,14 @@ const path = require('path');
 const formidable = require('formidable');
 // 创建web服务器
 const app = express();
-
-// 静态资源访问服务功能
+const bodyParser = require('body-parser')
+    // 静态资源访问服务功能
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-app.get('/first', (req, res) => {
+app.use(bodyParser.json())
+app.post('/first', (req, res) => {
+        console.log(req.body);
+        // res.send(req.body)
         res.send({
             name: 'dengyu'
         })

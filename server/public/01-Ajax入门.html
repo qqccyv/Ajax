@@ -10,13 +10,19 @@
 
 <body>
     <script>
+        let obj = {
+            name: 'dengyu'
+        }
         var xhr = new XMLHttpRequest();
         //需要在浏览器中访问静态地址，直接运行html文件会报跨域错误
         //Access to XMLHttpRequest at 'http://localhost:3000/first' from origin 'null' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
-        xhr.open('get', 'http://localhost:3000/first');
-        xhr.send();
+        xhr.open('post', 'http://localhost:3000/first');
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.send(
+            JSON.stringify(obj)
+        );
         xhr.onload = function() {
-            console.log(xhr.responseText);
+            console.log(JSON.parse(xhr.responseText));
 
         }
     </script>
