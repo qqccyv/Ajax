@@ -19,9 +19,11 @@ app.post('/post', (req, res) => {
 })
 
 // 邮箱地址验证
-app.get('/verifyEmailAdress', (req, res) => {
+app.post('/verifyEmailAdress', (req, res) => {
     // 接收客户端传递过来的邮箱地址
-    const email = req.query.email;
+    // console.log(req.body);
+
+    const email = req.body.email;
     // 判断邮箱地址注册过的情况
     if (email == 'itheima@itcast.cn') {
         // 设置http状态码并对客户端做出响应

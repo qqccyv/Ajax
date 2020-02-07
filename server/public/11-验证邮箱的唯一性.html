@@ -31,28 +31,38 @@
         let emailInp = document.querySelector('#email')
         let info = document.querySelector('#info')
         emailInp.onblur = function() {
-            info.className = ''
-            info.innerHTML = ''
 
             let email = this.value
-                // console.log(email);
+            if (email.trim().length == 0) {
+                info.style.display = 'none'
+                return
+            }
+            // console.log(email);
             var reg = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
             if (!reg.test(email)) {
                 info.innerHTML = '请输入正确格式的邮箱地址'
                 info.className = 'bg-danger'
                 return
             }
+            // console.log(email);
+
             ajax({
+                type: 'post',
                 url: 'http://localhost:3000/verifyEmailAdress',
                 data: {
-                    email
+                    email: email
+                },
+                header: {
+                    'Content-Type': 'application/json'
                 },
                 success: function(result) {
-                    console.log(result);
+                    info.innerHTML = result.message
+                    info.className = 'bg-success'
 
                 },
                 error: function(result) {
-                    console.log(result);
+                    info.innerHTML = result.message
+                    info.className = 'bg-danger'
 
                 }
             })
