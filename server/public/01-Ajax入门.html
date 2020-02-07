@@ -6,25 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="./js/ajax1.js"></script>
 </head>
 
 <body>
     <script>
-        let obj = {
-            name: 'dengyu'
-        }
-        var xhr = new XMLHttpRequest();
-        //需要在浏览器中访问静态地址，直接运行html文件会报跨域错误
-        //Access to XMLHttpRequest at 'http://localhost:3000/first' from origin 'null' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
-        xhr.open('post', 'http://localhost:3000/first');
-        xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.send(
-            JSON.stringify(obj)
-        );
-        xhr.onload = function() {
-            console.log(JSON.parse(xhr.responseText));
+        ajax({
+            type: 'post',
+            url: 'http://localhost:3000/first',
+            data: {
+                name: 'zs'
+            },
+            header: {
+                'Content-Type': 'application/json'
+            },
+            success: function(data) {
+                console.log(data);
 
-        }
+            }
+        })
     </script>
 </body>
 
