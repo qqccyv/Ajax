@@ -21,7 +21,7 @@
             let formData = new FormData(form)
             console.log(formData);
 
-            console.log(formData.get('username'));
+            console.log(formData.values());
             formData.set('age', 100)
             formData.delete('password')
             formData.append('username', 'dengyu')
