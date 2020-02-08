@@ -44,16 +44,15 @@
         xhr.upload.onprogress = function(e) {
             let result = ((e.loaded / e.total) * 100).toFixed(2) + '%'
             bar.style.width = result;
-            bar.innerHTML = result
+            bar.innerHTML = result;
         };
         xhr.send(form);
         xhr.onload = function() {
             if (xhr.status == 200) {
-                let img = document.createElement('img');
+                let img = document.createElement('img')
                 img.src = JSON.parse(xhr.responseText).path
                 img.onload = function() {
                     previews.appendChild(img)
-
                 }
             }
         }
