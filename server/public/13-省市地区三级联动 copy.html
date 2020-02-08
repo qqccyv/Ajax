@@ -61,15 +61,15 @@
         ajax({
             type: 'get',
             url: 'http://localhost:3000/province',
-            success: function(data) {
+            success: function(result) {
                 let html = template('provinceTpl', {
-                    province: data
+                    province: result
                 })
                 province.innerHTML = html
             }
-        })
+        });
         province.onchange = function() {
-            let pId = this.value
+            let pId = this.value;
             let html = template('areaTpl', {
                 area: []
             })
@@ -80,25 +80,25 @@
                 data: {
                     id: pId
                 },
-                success: function(data) {
+                success: function(result) {
                     let html = template('cityTpl', {
-                        city: data
+                        city: result
                     })
                     city.innerHTML = html
                 }
             })
         }
         city.onchange = function() {
-            let cId = this.value
+            let cId = this.value;
             ajax({
                 type: 'get',
                 url: 'http://localhost:3000/areas',
                 data: {
                     id: cId
                 },
-                success: function(data) {
+                success: function(result) {
                     let html = template('areaTpl', {
-                        area: data
+                        area: result
                     })
                     area.innerHTML = html
                 }

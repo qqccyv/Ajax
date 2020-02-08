@@ -38,7 +38,7 @@
         var listbox = document.querySelector('#list-box');
         let timer = null
         searchInp.oninput = function() {
-            var key = this.value
+            let key = this.value;
             clearTimeout(timer)
             if (key.trim().length == 0) {
                 listbox.style.display = 'none'
@@ -54,15 +54,13 @@
                     success: function(result) {
                         let html = template('tpl', {
                             result
-                        })
+                        });
                         listbox.innerHTML = html
                         listbox.style.display = 'block'
-                    },
-                    error: function(result) {
-
                     }
                 })
             }, 800)
+
 
         }
     </script>
