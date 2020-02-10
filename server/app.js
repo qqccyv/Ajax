@@ -11,6 +11,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.get('/getData', (req, res) => {
+    res.send(`
+    function fn() {
+        console.log('fn1');
+    
+    }
+    `)
+})
 app.post('/first', (req, res) => {
     res.send(req.body)
 })
