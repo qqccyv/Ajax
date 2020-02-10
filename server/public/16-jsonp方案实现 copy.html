@@ -36,14 +36,14 @@
 
     function jsonp(options) {
         let script = document.createElement('script');
-        let funName = 'myJsonp' + Math.random().toString().replace('.', '')
+        let funName = 'myJsonp' + Math.random().toString().replace('.', '');
         window[funName] = options.success
         let params = '';
         for (let attr in options.data) {
             params += '&' + attr + '=' + options.data[attr]
         }
         script.src = options.url + '?callback=' + funName + params
-        document.body.appendChild(script)
+        document.body.appendChild(script);
         script.onload = function() {
             document.body.removeChild(script)
         }
