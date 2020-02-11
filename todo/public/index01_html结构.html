@@ -102,11 +102,23 @@
             }
         })
 
-        $(".destroy").on('click', function() {
+        todoList.on('click', '.destroy', function() {
+            console.log('1');
+
             var id = $(this).attr('data-id');
             $.ajax({
                 type: 'get',
-                url: '/todo/clearTask'
+                url: '/todo/clearTask',
+                data: {
+                    _id: id
+                },
+                success: function() {
+                    let index = taskAry.findIndex((value, index) => {
+                        return value._id == id
+                    })
+                    taskAry.splice(index, 1)
+                    render()
+                }
             })
         })
     </script>
