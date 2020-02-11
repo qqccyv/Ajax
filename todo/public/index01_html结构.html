@@ -72,40 +72,40 @@
 
         }
         $.ajax({
-            type: 'get',
-            url: '/todo/task',
-            success: function(result) {
-                taskAry = result //保持每次刷新后和数据库同步！！
-                render()
-            }
-        })
-
-        $('#task').on('keyup', function(e) {
-            if (e.keyCode == 13) {
-                let title = $(this).val();
-                if (title.trim().length == 0) {
-                    return
+                type: 'get',
+                url: '/todo/task',
+                success: function(result) {
+                    taskAry = result //保持每次刷新后和数据库同步！！
+                    render()
                 }
-                $.ajax({
-                    type: 'post',
-                    url: '/todo/addTask',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        title
-                    }),
-                    success: function(res) {
-                        taskAry.push(res)
-                        render()
-                        $('#task').val('')
+            })
+            //添加待办事项
+        $('#task').on('keyup', function(e) {
+                if (e.keyCode == 13) {
+                    let title = $(this).val();
+                    if (title.trim().length == 0) {
+                        return
                     }
-                })
-            }
-        })
-
+                    $.ajax({
+                        type: 'post',
+                        url: '/todo/addTask',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            title
+                        }),
+                        success: function(res) {
+                            taskAry.push(res)
+                            render()
+                            $('#task').val('')
+                        }
+                    })
+                }
+            })
+            //删除事件
         todoList.on('click', '.destroy', function() {
             console.log('1');
 
-            var id = $(this).attr('data-id');
+            let id = $(this).attr('data-id');
             $.ajax({
                 type: 'get',
                 url: '/todo/clearTask',
@@ -119,6 +119,31 @@
                     taskAry.splice(index, 1)
                     render()
                 }
+            })
+        })
+
+        //修改待办事项状态
+        todoList.on('change', '.toggle', function() {
+            let id = $(this).siblings('.destroy').attr('data-id')
+            let obj = taskAry.find((value, index) => {
+                return value._id == id
+            })
+            obj.completed = !obj.completed
+            let index = taskAry.findIndex((value, index) => {
+                return value._id == id
+            })
+            $.ajax({
+                type: 'post',
+                url: '/todo/modifyTask',
+                contentType: 'application/json',
+                data: JSON.stringify(obj),
+                success: function(res) {
+                    taskAry[index].completed = res.completed
+                    render()
+                    console.log(res);
+
+                }
+
             })
         })
     </script>
