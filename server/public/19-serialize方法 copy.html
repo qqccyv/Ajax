@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/jquery/dist/jquery.min.js"></script>
+</head>
+
+<body>
+    <form action="" id="form">
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <input type="submit">
+    </form>
+</body>
+<script>
+    $(function() {
+        $('#form').on('submit', () => {
+            // let data = $('#form').serialize()
+            // console.log(data);
+
+            console.log(serializeObject($('#form')));
+
+            return false
+        })
+
+        function serializeObject(data) {
+            let params = data.serializeArray();
+            let result = {};
+            $.each(params, function(index, value) {
+                result[value.name] = value.value
+            })
+            return result
+        }
+    })
+</script>
+
+</html>
