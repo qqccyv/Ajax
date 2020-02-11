@@ -6,6 +6,8 @@ const formidable = require('formidable');
 // 创建web服务器
 const app = express();
 const bodyParser = require('body-parser')
+
+const request = require('request')
     // 静态资源访问服务功能
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -219,8 +221,13 @@ app.post('/base', (req, res) => {
         age: 30
     })
 })
-
-// 监听端口
+app.get('/server', (req, res) => {
+        request('http://localhost:3001/server', (err, response, body) => {
+            // console.log(body);
+            res.send(body)
+        })
+    })
+    // 监听端口
 app.listen(3000);
 // 控制台提示输出
 console.log('服务器启动成功');

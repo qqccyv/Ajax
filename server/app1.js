@@ -54,5 +54,8 @@ app.get('/jsonp', (req, res) => {
     res.send(result + '({name: "dengyu"})')
         // res.jsonp({ name: 'qqccyv', age: 18 })
 })
+app.get('/server', (req, res) => {
+    res.send('ok')
+})
 app.listen('3001');
 console.log('服务器启动成功');
