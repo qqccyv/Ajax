@@ -90,4 +90,4 @@ app.get('/xml', (req, res) => {
 app.listen(3000);
 // 控制台提示输出
 console.log('服务器启动成功');
-console.log(path.join(__dirname, 'public'));
+// console.log(path.join(__dirname, 'public'));

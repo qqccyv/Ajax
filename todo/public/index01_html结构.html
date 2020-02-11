@@ -53,7 +53,7 @@
             <div class="view">
                 <input class="toggle" type="checkbox" {{$value.completed? 'checked': ''}}>
                 <label>{{$value.title}}</label>
-                <button class="destroy" data-id="1"></button>
+                <button class="destroy" data-id="{{$value._id}}"></button>
             </div>
             <input class="edit">
         </li>
@@ -61,26 +61,53 @@
     </script>
     <script>
         todoList = $('#todo-list')
-        var taskAry = [];
+        var taskAry = []; //本地定义一个新数组来方便操作
         //定义渲染数据在页面的方法，重复使用
-        function render(result) {
+        function render() {
             let html = template('todoTpl', {
-                tasks: result
+                tasks: taskAry
             })
-
             todoList.html(html)
+            console.log(taskAry);
+
         }
         $.ajax({
             type: 'get',
             url: '/todo/task',
             success: function(result) {
-                taskAry = result
-                    // console.log(result);
-
-                console.log(taskAry);
-                render(result)
-
+                taskAry = result //保持每次刷新后和数据库同步！！
+                render()
             }
+        })
+
+        $('#task').on('keyup', function(e) {
+            if (e.keyCode == 13) {
+                let title = $(this).val();
+                if (title.trim().length == 0) {
+                    return
+                }
+                $.ajax({
+                    type: 'post',
+                    url: '/todo/addTask',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        title
+                    }),
+                    success: function(res) {
+                        taskAry.push(res)
+                        render()
+                        $('#task').val('')
+                    }
+                })
+            }
+        })
+
+        $(".destroy").on('click', function() {
+            var id = $(this).attr('data-id');
+            $.ajax({
+                type: 'get',
+                url: '/todo/clearTask'
+            })
         })
     </script>
 </body>
