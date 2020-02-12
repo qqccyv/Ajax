@@ -68,7 +68,7 @@
                 tasks: taskAry
             })
             todoList.html(html)
-            console.log(taskAry);
+                // console.log(taskAry);
 
         }
         $.ajax({
@@ -108,7 +108,7 @@
             let id = $(this).attr('data-id');
             $.ajax({
                 type: 'get',
-                url: '/todo/clearTask',
+                url: '/todo/deleteTask',
                 data: {
                     _id: id
                 },
@@ -125,22 +125,33 @@
         //修改待办事项状态
         todoList.on('change', '.toggle', function() {
             let id = $(this).siblings('.destroy').attr('data-id')
+            const status = $(this).is(':checked');
+
             let obj = taskAry.find((value, index) => {
-                return value._id == id
-            })
-            obj.completed = !obj.completed
-            let index = taskAry.findIndex((value, index) => {
-                return value._id == id
-            })
+                    return value._id == id
+                })
+                // obj.completed = !obj.completed
+                // let index = taskAry.findIndex((value, index) => {
+                //     return value._id == id
+                // })
             $.ajax({
                 type: 'post',
                 url: '/todo/modifyTask',
                 contentType: 'application/json',
-                data: JSON.stringify(obj),
+                data: JSON.stringify({
+                    _id: id,
+                    title: obj.title,
+                    completed: status
+                }),
                 success: function(res) {
-                    taskAry[index].completed = res.completed
-                    render()
+                    console.log(obj);
                     console.log(res);
+
+                    obj.completed = res.completed
+                    render()
+                    console.log(obj);
+
+                    // console.log(res);
 
                 }
 
