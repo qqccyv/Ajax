@@ -76,6 +76,27 @@
             let result = taskAry.filter(item => item.completed == false);
             $('#count').text(result.length)
         }
+        let flag = false
+            //定义筛选待办事项状态函数，重复使用
+        function filt(status) {
+            // console.log(1);
+            flag = status
+                // console.log(flag);
+
+            return function() {
+                // console.log(taskAry);
+                // console.log(this.flag);
+
+                let result = taskAry.filter(item => item.completed == flag);
+                // console.log(result);
+
+                let html = template('todoTpl', {
+                    tasks: result
+                })
+                todoList.html(html)
+            }
+
+        }
         $.ajax({
                 type: 'get',
                 url: '/todo/task',
@@ -200,6 +221,8 @@
                 }
             })
         })
+
+        $('.filters li:eq(1)').on('click', filt(false))
     </script>
 </body>
 
