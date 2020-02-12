@@ -81,7 +81,7 @@
         function filt(status) {
             // console.log(1);
             let flag = status
-            console.log(flag);
+                // console.log(flag);
 
             return function() {
                 // console.log(taskAry);
@@ -225,6 +225,9 @@
         $('.filters li:eq(0)').on('click', render)
         $('.filters li:eq(1)').on('click', filt(false))
         $('.filters li:eq(2)').on('click', filt(true))
+        $('.clear-completed').on('click', function() {
+            todoList.find(':checked').siblings('.destroy').click()
+        })
     </script>
 </body>
 
