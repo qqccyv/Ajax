@@ -71,12 +71,18 @@
                 // console.log(taskAry);
 
         }
+        //定义计算未完成事项函数，重复使用
+        function count() {
+            let result = taskAry.filter(item => item.completed == false);
+            $('#count').text(result.length)
+        }
         $.ajax({
                 type: 'get',
                 url: '/todo/task',
-                success: function(result) {
-                    taskAry = result //保持每次刷新后和数据库同步！！
+                success: function(res) {
+                    taskAry = res //保持每次刷新后和数据库同步！！
                     render()
+                    count()
                 }
             })
             //添加待办事项
@@ -91,11 +97,12 @@
                         url: '/todo/addTask',
                         contentType: 'application/json',
                         data: JSON.stringify({
-                            title
+                            title: title
                         }),
                         success: function(res) {
                             taskAry.push(res)
                             render()
+                            count()
                             $('#task').val('')
                         }
                     })
@@ -103,7 +110,7 @@
             })
             //删除事件
         todoList.on('click', '.destroy', function() {
-            console.log('1');
+            // console.log('1');
 
             let id = $(this).attr('data-id');
             $.ajax({
@@ -118,6 +125,7 @@
                     })
                     taskAry.splice(index, 1)
                     render()
+                    count()
                 }
             })
         })
@@ -144,17 +152,52 @@
                     completed: status
                 }),
                 success: function(res) {
-                    console.log(obj);
-                    console.log(res);
+                    // console.log(obj);
+                    // console.log(res);
 
                     obj.completed = res.completed
                     render()
-                    console.log(obj);
+                    count()
+                        // console.log(obj);
 
                     // console.log(res);
 
                 }
 
+            })
+        })
+
+        //修改待办事项
+        todoList.on('dblclick', 'label', function() {
+            // console.log(1);
+
+            $(this).parent().parent().addClass('editing')
+                // let id = $(this).siblings('.destroy').
+            $(this).parent().siblings('.edit').val($(this).text()).focus()
+
+
+        })
+
+        todoList.on('blur', '.edit', function() {
+            let id = $(this).siblings().find('.destroy').attr('data-id');
+            let newTask = $(this).val()
+            if (newTask.trim().length == 0) {
+                $(this).siblings().find('.destroy').click()
+                return
+            }
+            $.ajax({
+                type: 'post',
+                url: '/todo/modifyTask',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    _id: id,
+                    title: newTask
+                }),
+                success: function(res) {
+                    let task = taskAry.find(item => item._id == id);
+                    task.title = res.title
+                    render()
+                }
             })
         })
     </script>
