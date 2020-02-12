@@ -60,6 +60,12 @@
         {{/each}}
     </script>
     <script>
+        $(document).on('ajaxStart', function() {
+            NProgress.start()
+        })
+        $(document).on('ajaxComplete', function() {
+            NProgress.done()
+        })
         todoList = $('#todo-list')
         var taskAry = []; //本地定义一个新数组来方便操作
         //定义渲染数据在页面的方法，重复使用
