@@ -32,13 +32,13 @@
             <!-- Remove this if you don't implement routing -->
             <ul class="filters">
                 <li>
-                    <a class="selected" href="javascript:;">All</a>
+                    <a class="filters-item selected" href="javascript:;">All</a>
                 </li>
                 <li>
-                    <a href="javascript:;">Active</a>
+                    <a class="filters-item" href="javascript:;">Active</a>
                 </li>
                 <li>
-                    <a href="javascript:;">Completed</a>
+                    <a class="filters-item" href="javascript:;">Completed</a>
                 </li>
             </ul>
             <!-- Hidden if no completed items are left ↓ -->
@@ -65,8 +65,17 @@
         let taskAry = [];
         //定义模板函数，将数据展现在浏览器中
         function render() {
-            let html = template('todoTpl', {
-                tasks: taskAry
+            var filterTaskAry = taskAry.filter((item) => {
+                if (filter == 'All') {
+                    return true
+                } else if (filter == 'Active') {
+                    return !item.completed
+                } else if (filter == 'Completed') {
+                    return item.completed
+                }
+            })
+            var html = template('todoTpl', {
+                tasks: filterTaskAry
             })
             todoList.html(html)
         }
@@ -185,6 +194,16 @@
                     render()
                 }
             })
+        })
+
+        let filter = 'All';
+        $('a.filters-item').on('click', function() {
+            $('a.filters-item.selected').removeClass('selected');
+            $(this).addClass('selected')
+            let text = $(this).text()
+                // console.log(text)
+            filter = text
+            render();
         })
     </script>
 </body>
