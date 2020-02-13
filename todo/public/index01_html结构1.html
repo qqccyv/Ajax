@@ -166,6 +166,26 @@
             }
 
         })
+
+        //修改待办事项状态
+        todoList.on('change', '.toggle', function() {
+            let status = $(this).is(':checked')
+            let id = $(this).siblings('.destroy').attr('data-id')
+            $.ajax({
+                type: 'post',
+                url: '/todo/modifyTask',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    _id: id,
+                    completed: status
+                }),
+                success: function(res) {
+                    let task = taskAry.find(item => item._id == id)
+                    task.completed = res.completed
+                    render()
+                }
+            })
+        })
     </script>
 </body>
 
