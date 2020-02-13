@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="/js/nprogress/nprogress.css">
+</head>
+
+<body>
+    <section class="todoapp">
+        <header class="header">
+            <h1>todos</h1>
+            <input type="text" class="new-todo" placeholder="What needs to be done?" autofocus id="task">
+        </header>
+        <!-- This section should be hidden by default and shown when there are todos -->
+        <section class="main">
+            <input class="toggle-all" type="checkbox">
+            <ul class="todo-list" id="todo-list">
+
+
+
+            </ul>
+        </section>
+        <!-- This footer should hidden by default and shown when there are todos -->
+        <footer class="footer">
+            <!-- This should be `0 items left` by default -->
+            <span class="todo-count"><strong id="count">0</strong> item left</span>
+            <!-- Remove this if you don't implement routing -->
+            <ul class="filters">
+                <li>
+                    <a class="selected" href="javascript:;">All</a>
+                </li>
+                <li>
+                    <a href="javascript:;">Active</a>
+                </li>
+                <li>
+                    <a href="javascript:;">Completed</a>
+                </li>
+            </ul>
+            <!-- Hidden if no completed items are left ↓ -->
+            <button class="clear-completed">Clear completed</button>
+        </footer>
+    </section>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/template-web.js"></script>
+    <script src="/js/nprogress/nprogress.js"></script>
+    <script type="text/html" id="todoTpl">
+        {{each tasks}}
+        <li class="{{$value.completed? 'completed':''}}">
+            <div class="view">
+                <input class="toggle" type="checkbox" {{$value.completed? 'checked': ''}}>
+                <label>{{$value.title}}</label>
+                <button class="destroy" data-id="{{$value._id}}"></button>
+            </div>
+            <input class="edit">
+        </li>
+        {{/each}}
+    </script>
+    <script>
+        todoList = $('#todo-list');
+        let taskAry = [];
+        //定义模板函数，将数据展现在浏览器中
+        function render() {
+            let html = template('todoTpl', {
+                tasks: taskAry
+            })
+            todoList.html(html)
+        }
+        //定义修改待办事项
+        function modifier() {
+            let id = $(this).siblings('.view').find('.destroy').attr('data-id')
+            let newTask = $(this).val()
+            if (newTask.trim().length == 0) {
+                $(this).siblings().find('.destroy').click()
+                return
+            }
+            $.ajax({
+                type: 'post',
+                url: '/todo/modifyTask',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    _id: id,
+                    title: newTask
+                }),
+                success: function(res) {
+                    let task = taskAry.find(item => item._id == id)
+                    task.title = res.title
+                    render()
+                }
+            })
+        }
+        //查询所有数据，并展示在浏览器中
+        $.ajax({
+            type: 'get',
+            url: '/todo/task',
+            success: function(res) {
+                taskAry = res
+                render()
+            }
+        })
+
+        //新增待办事项
+        $('#task').on('keyup', function(e) {
+            // console.log(task)
+            if (e.keyCode == 13) {
+                let task = $(this).val()
+
+                if (task.trim().length == 0) {
+                    return
+                }
+                $.ajax({
+                    type: 'post',
+                    url: '/todo/addTask',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        title: task
+                    }),
+                    success: function(res) {
+                        taskAry.push(res)
+                        render()
+                        $('#task').val('')
+                    }
+                })
+            }
+        })
+
+        //删除待办事项
+        todoList.on('click', '.destroy', function() {
+            let id = $(this).attr('data-id')
+                // console.log(id);
+            $.ajax({
+                type: 'get',
+                url: '/todo/deleteTask',
+                data: {
+                    _id: id
+                },
+                success: function() {
+                    let index = taskAry.findIndex(item => item._id == id)
+                    taskAry.splice(index, 1)
+                    render()
+                }
+            })
+
+        })
+
+        //修改待办事项
+
+        todoList.on('dblclick', 'label', function() {
+            $(this).parent().parent().addClass('editing')
+            $(this).parent().siblings('.edit').val($(this).text()).focus()
+        })
+
+        todoList.on('blur', '.edit', modifier)
+        todoList.on('keyup', '.edit', function(e) {
+            // if (e.keyCode != 13) {
+            //     return
+            // } else {
+            //     $(this).blur()
+            // }
+            if (e.keyCode === 13) {
+                $(this).blur()
+            }
+
+        })
+    </script>
+</body>
+
+</html>
