@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/template-web.js"></script>
+</head>
+
+<body>
+    <script type="text/html" id="tpl">
+        <div>
+            <span>姓名： {{@ name}}</span>
+            <span>年龄： {{age}}</span>
+            <span>脚本语言： {{@ script}}</span>
+
+        </div>
+    </script>
+    <script>
+        let html = template('tpl', {
+            name: '<h1>邓宇</h1>',
+            age: 18,
+            script: "<script>console.log(1)<\/script>" //script标签会找最近一个/script匹配 所以要加转义符  同时模板引擎只会解析标签 不会执行js代码
+        })
+        document.body.innerHTML = html
+    </script>
+</body>
+
+</html>
