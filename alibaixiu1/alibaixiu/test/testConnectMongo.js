@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 // const url = 'mongodb://localhost:27017/alibaixiu';
 const url = 'mongodb://132.232.216.199:27017/alibaixiu'
-const options = { useNewUrlParser: true, useCreateIndex: true };
+const options = { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true };
 mongoose.connect(url, options).then(() => {
     console.log('连接成功');
 }, () => {
