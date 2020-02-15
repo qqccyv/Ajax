@@ -55,6 +55,18 @@ $('#usersList').on('click', '.edit', function(e) {
             }
         })
     })
+    //删除用户信息
+$('#usersList').on('click', '.delete', function(e) {
+        e.preventDefault()
+        let id = $(this).data('id')
+        $.ajax({
+            type: 'delete',
+            url: '/users/' + id,
+            success: function() {
+                location.reload()
+            }
+        })
+    })
     //修改用户信息
 $('#userForm').on('submit', '#modifyUser', function() {
     let id = $(this).data('id')
