@@ -95,7 +95,7 @@
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th class="text-center" width="40"><input type="checkbox"></th>
+                                <th class="text-center" width="40"><input type="checkbox" id="selectAll"></th>
                                 <th class="text-center" width="80">头像</th>
                                 <th>邮箱</th>
                                 <th>昵称</th>
@@ -157,11 +157,11 @@
     </script>
     <script src="../assets/js/users.js">
     </script>
-    <!-- 添加用户模板 -->
+    <!-- 展示用户信息模板 -->
     <script type="text/html" id="userTpl">
         {{each users}}
         <tr>
-            <td class="text-center"><input type="checkbox"></td>
+            <td class="text-center"><input class="userIpt" type="checkbox"></td>
             <td class="text-center">
                 {{if $value.avatar}}
                 <img class="avatar" src="{{$value.avatar}}"> {{else}}

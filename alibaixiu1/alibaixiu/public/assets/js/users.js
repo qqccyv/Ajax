@@ -67,6 +67,18 @@ $('#usersList').on('click', '.delete', function(e) {
             }
         })
     })
+    //批量删除客户信息
+    //全选功能
+$('#selectAll').on('change', function() {
+
+    let status = $(this).prop('checked')
+    $('#usersList input').prop('checked', status)
+})
+$('#usersList').on('change', '.userIpt', function() {
+        let iptLength = $('#usersList .userIpt').length
+        let checkedLength = $('#usersList input:checked').length
+        $('#selectAll').prop('checked', iptLength == checkedLength)
+    })
     //修改用户信息
 $('#userForm').on('submit', '#modifyUser', function() {
     let id = $(this).data('id')
