@@ -73,13 +73,22 @@ $('#selectAll').on('change', function() {
 
     let status = $(this).prop('checked')
     $('#usersList input').prop('checked', status)
+
+    status ? $('#deleteMany').show() : $('#deleteMany').hide()
+
+
 })
 $('#usersList').on('change', '.userIpt', function() {
         let iptLength = $('#usersList .userIpt').length
         let checkedLength = $('#usersList input:checked').length
         $('#selectAll').prop('checked', iptLength == checkedLength)
+        checkedLength > 0 ? $('#deleteMany').show() : $('#deleteMany').hide()
+
     })
-    //修改用户信息
+    //批量删除用户信息
+let userArr = [];
+
+//修改用户信息
 $('#userForm').on('submit', '#modifyUser', function() {
     let id = $(this).data('id')
     let formData = $(this).serialize();
