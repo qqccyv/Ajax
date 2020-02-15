@@ -161,7 +161,7 @@
     <script type="text/html" id="userTpl">
         {{each users}}
         <tr>
-            <td class="text-center"><input class="userIpt" type="checkbox"></td>
+            <td class="text-center"><input class="userIpt" type="checkbox" data-id="{{$value._id}}"></td>
             <td class="text-center">
                 {{if $value.avatar}}
                 <img class="avatar" src="{{$value.avatar}}"> {{else}}

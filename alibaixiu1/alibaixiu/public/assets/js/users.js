@@ -59,13 +59,15 @@ $('#usersList').on('click', '.edit', function(e) {
 $('#usersList').on('click', '.delete', function(e) {
         e.preventDefault()
         let id = $(this).data('id')
-        $.ajax({
-            type: 'delete',
-            url: '/users/' + id,
-            success: function() {
-                location.reload()
-            }
-        })
+        if (confirm('您确定要删除所选中的用户吗？')) {
+            $.ajax({
+                type: 'delete',
+                url: '/users/' + id,
+                success: function() {
+                    location.reload()
+                }
+            })
+        }
     })
     //批量删除客户信息
     //全选功能
@@ -85,10 +87,25 @@ $('#usersList').on('change', '.userIpt', function() {
         checkedLength > 0 ? $('#deleteMany').show() : $('#deleteMany').hide()
 
     })
-    //批量删除用户信息
+    //批量删除功能
 let userArr = [];
+$('#deleteMany').on('click', function() {
+        $('#usersList input:checked').each(function(index, value) {
+                userArr.push($(value).data('id'))
+            })
+            // console.log(userArr);
+        if (confirm('您确定要删除所有选中的用户吗？')) {
+            $.ajax({
+                type: 'delete',
+                url: '/users/' + userArr.join('-'),
+                success: function() {
+                    location.reload()
+                }
+            })
+        }
 
-//修改用户信息
+    })
+    //修改用户信息
 $('#userForm').on('submit', '#modifyUser', function() {
     let id = $(this).data('id')
     let formData = $(this).serialize();
