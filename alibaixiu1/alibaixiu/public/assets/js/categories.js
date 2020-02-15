@@ -29,17 +29,31 @@ $('#categoriesForm').on('submit', function(e) {
 //编辑分类信息
 //展示待编辑的分类信息
 $('#categoriesList').on('click', '.edit', function() {
-    let id = $(this).data('id');
+        let id = $(this).data('id');
 
+        $.ajax({
+            type: 'get',
+            url: '/categories/' + id,
+            success: function(res) {
+                // console.log(res);
+
+                let html = template('editCategories', res)
+
+                $('#categoriesBox').html(html)
+            }
+        })
+    })
+    //保存修改后的分类信息
+$('#categoriesBox').on('submit', '#modifyCategories', function(e) {
+    e.preventDefault();
+    let id = $(this).data('id')
+    let formData = $(this).serialize();
     $.ajax({
-        type: 'get',
+        type: 'put',
         url: '/categories/' + id,
-        success: function(res) {
-            console.log(res);
-
-            let html = template('editCategories', res)
-
-            $('#categoriesBox').html(html)
+        data: formData,
+        success: function() {
+            location.reload()
         }
     })
 })
