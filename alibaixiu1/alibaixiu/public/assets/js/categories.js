@@ -26,4 +26,20 @@ $('#categoriesForm').on('submit', function(e) {
     })
 })
 
-//分类信息展示
+//编辑分类信息
+//展示待编辑的分类信息
+$('#categoriesList').on('click', '.edit', function() {
+    let id = $(this).data('id');
+
+    $.ajax({
+        type: 'get',
+        url: '/categories/' + id,
+        success: function(res) {
+            console.log(res);
+
+            let html = template('editCategories', res)
+
+            $('#categoriesBox').html(html)
+        }
+    })
+})
