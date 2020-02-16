@@ -8,6 +8,11 @@ $.ajax({
         // console.log(res.records);
         let html = template('postsTpl', res)
         $('#postsList').html(html)
+        let pageHtml = template('pageTpl', res)
+        $('#pageBox').html(pageHtml)
+            // console.log(res);
+
+
     }
 })
 
@@ -18,3 +23,22 @@ function dateformat(date) {
 }
 
 template.defaults.imports.dateformat = dateformat
+
+//定义翻页函数
+function onchangePage(page) {
+    // console.log(page);
+
+    $.ajax({
+        type: 'get',
+        url: '/posts',
+        data: { page },
+        success: function(res) {
+            // console.log(res.records);
+            let html = template('postsTpl', res)
+            $('#postsList').html(html)
+            let pageHtml = template('pageTpl', res)
+            $('#pageBox').html(pageHtml)
+                // console.log(res);
+        }
+    })
+}
