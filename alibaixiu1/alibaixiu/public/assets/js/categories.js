@@ -57,3 +57,51 @@ $('#categoriesBox').on('submit', '#modifyCategories', function(e) {
         }
     })
 })
+
+//分类信息的全选，反选 批量删除按钮显示隐藏
+$('#checkAll').on('change', function() {
+    let status = $(this).is(':checked')
+    $('#categoriesList input').prop('checked', status)
+    status ? $('.deleteMany').show() : $('.deleteMany').hide()
+})
+$('#categoriesList').on('change', 'input', function() {
+    // console.log(1);
+
+    let iptLength = $('#categoriesList input').length
+    let checkedLength = $('#categoriesList input:checked').length
+    $('#checkAll').prop('checked', iptLength == checkedLength)
+    checkedLength > 0 ? $('.deleteMany').show() : $('.deleteMany').hide()
+
+})
+
+//删除和批量删除
+$('#categoriesList').on('click', '.delete', function() {
+    let id = $(this).data('id');
+    if (confirm('您确定要删除所选选项吗？')) {
+        $.ajax({
+            type: 'delete',
+            url: '/categories/' + id,
+            success: function() {
+                location.reload()
+            }
+        })
+    }
+
+})
+$('.deleteMany').on('click', function() {
+    let checkedCategories = []
+    $('#categoriesList input:checked').each(function(index, item) {
+        checkedCategories.push($(item).data('id'))
+    })
+    if (confirm('您确定要删除所选选项吗？')) {
+        $.ajax({
+            type: 'delete',
+            url: '/categories/' + checkedCategories.join('-'),
+            success: function() {
+                location.reload()
+            }
+
+        })
+    }
+
+})
