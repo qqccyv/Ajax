@@ -13,7 +13,7 @@ $.ajax({
         }
     })
     //文章封面添加 
-$('#feature').on('change', function() {
+$('#parentBox').on('change', '#feature', function() {
         let file = this.files[0]
         let formData = new FormData()
         if (file) {
@@ -76,10 +76,10 @@ if (id != -1) {
                 success: function(categories) {
                     res.categories = categories
                     let html = template('modifyTpl',
-                        res
-                    )
-                    console.log(res);
-                    console.log(html);
+                            res
+                        )
+                        // console.log(res);
+                        // console.log(html);
 
                     $('#parentBox').html(html)
                 }
