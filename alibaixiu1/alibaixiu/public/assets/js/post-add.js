@@ -63,7 +63,7 @@ function getUrlParams(name) {
     }
     return -1
 }
-// 判断是否是修改页面
+// 判断是否是修改页面并加载修改页面
 let id = getUrlParams('id')
 if (id != -1) {
     $.ajax({
@@ -87,3 +87,16 @@ if (id != -1) {
         }
     })
 }
+$('#parentBox').on('submit', '#modifyPost', function(e) {
+    e.preventDefault()
+    let id = $(this).data('id')
+    let formData = $(this).serialize()
+    $.ajax({
+        type: 'put',
+        url: '/posts/' + id,
+        data: formData,
+        success: function() {
+            location.href = '/admin/posts.html'
+        }
+    })
+})
