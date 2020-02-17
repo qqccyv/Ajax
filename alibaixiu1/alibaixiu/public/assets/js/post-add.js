@@ -29,6 +29,7 @@ $('#feature').on('change', function() {
                 }
             })
         }
+        $('#thumbnail').val('')
         $('#preview').hide()
 
     })

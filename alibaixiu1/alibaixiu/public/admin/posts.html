@@ -38,16 +38,18 @@
                 <a href="post-add.html" class="btn btn-primary btn-xs">写文章</a>
             </div>
             <div class="page-action">
+                <!-- 筛选列表 -->
                 <!-- show when multiple checked -->
                 <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
-                <form class="form-inline">
-                    <select name="" class="form-control input-sm">
-            <option value="">所有分类</option>
+                <!-- 分类列表 -->
+                <form class="form-inline" id="filterForm">
+                    <select name="category" class="form-control input-sm" id="categoryList">
           </select>
-                    <select name="" class="form-control input-sm">
-            <option value="">所有状态</option>
-            <option value="">草稿</option>
-            <option value="">已发布</option>
+                    <!-- 状态列表 -->
+                    <select name="state" class="form-control input-sm">
+            <option >所有状态</option>
+            <option value="0">草稿</option>
+            <option value="1">已发布</option>
           </select>
                     <button class="btn btn-default btn-sm">筛选</button>
                 </form>
@@ -137,6 +139,12 @@
         {{/each}} {{if page
         <pages}} <li><a href="javascript:;" onclick="onchangePage({{page+1}})">下一页</a></li>
             {{/if}}
+    </script>
+    <script type="text/html" id="categoriesTpl">
+        <option>所有分类</option>
+        {{each categories}}
+        <option value="{{$value._id}}">{{$value.title}}</option>
+        {{/each}}
     </script>
     <script src="../assets/js/posts.js"></script>
     <script>

@@ -42,3 +42,39 @@ function onchangePage(page) {
         }
     })
 }
+
+//筛选模块
+//展示分类信息
+
+$.ajax({
+    type: 'get',
+    url: '/categories',
+    success: function(res) {
+        let html = template('categoriesTpl', {
+            categories: res
+        })
+        $('#categoryList').html(html)
+    }
+})
+
+$("#filterForm").on('submit', function(e) {
+    e.preventDefault()
+    let formData = $(this).serialize()
+        // console.log(formData);
+
+    $.ajax({
+        type: 'get',
+        url: '/posts',
+        data: formData,
+        success: function(res) {
+            // console.log(res.records);
+            let html = template('postsTpl', res)
+            $('#postsList').html(html)
+            let pageHtml = template('pageTpl', res)
+            $('#pageBox').html(pageHtml)
+                // console.log(res);
+
+
+        }
+    })
+})

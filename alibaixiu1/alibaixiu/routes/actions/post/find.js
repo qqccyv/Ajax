@@ -20,8 +20,8 @@ module.exports = async(req, res) => {
     if (req.query.state != undefined) {
         condition.state = req.query.state;
     }
-    console.log(condition)
-        // 查询用户信息
+    // console.log(condition)
+    // 查询用户信息
     const posts = await pagination(Post).page(page).size(3).display(5).find(condition).populate('author', '-password').populate('category').select('-content -meta').exec();
     // 响应
     res.send(posts);
