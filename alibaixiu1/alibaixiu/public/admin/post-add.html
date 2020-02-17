@@ -33,53 +33,58 @@
             </ul>
         </nav>
         <div class="container-fluid">
-            <div class="page-title">
-                <h1>写文章</h1>
-            </div>
+
             <!-- 有错误信息时展示 -->
             <!-- <div class="alert alert-danger">
         <strong>错误！</strong>发生XXX错误
       </div> -->
-            <form class="row" id="createPost">
-                <div class="col-md-9">
-                    <div class="form-group">
-                        <label for="title">标题</label>
-                        <input id="title" class="form-control input-lg" name="title" type="text" placeholder="文章标题">
-                    </div>
-                    <div class="form-group">
-                        <label for="content">标题</label>
-                        <textarea id="content" class="form-control input-lg" name="content" cols="30" rows="10" placeholder="内容"></textarea>
-                    </div>
+            <div id="parentBox">
+                <div class="page-title">
+                    <h1>写文章</h1>
                 </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="feature">文章封面</label>
-                        <!-- show when image chose -->
-                        <img id="preview" class="help-block thumbnail" style="display: none">
-                        <input id="feature" class="form-control" name="feature" type="file">
-                        <input type="hidden" id="thumbnail" name="thumbnail">
+                <form class="row" id="createPost">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="title">标题</label>
+                            <input id="title" class="form-control input-lg" name="title" type="text" placeholder="文章标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="content">文章内容</label>
+                            <textarea id="content" class="form-control input-lg" name="content" cols="30" rows="10" placeholder="内容"></textarea>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="category">所属分类</label>
-                        <select id="category" class="form-control" name="category">
-            </select>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="feature">文章封面</label>
+                            <!-- show when image chose -->
+                            <img id="preview" class="help-block thumbnail" style="display: none">
+                            <input id="feature" class="form-control" name="feature" type="file">
+                            <input type="hidden" id="thumbnail" name="thumbnail">
+                        </div>
+                        <div class="form-group">
+                            <label for="category">所属分类</label>
+                            <select id="category" class="form-control" name="category">
+        </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="created">发布时间</label>
+                            <input id="created" class="form-control" name="createAt" type="datetime-local">
+                        </div>
+                        <div class="form-group">
+                            <label for="status">状态</label>
+                            <select id="status" class="form-control" name="state">
+          <option value="0">草稿</option>
+          <option value="1">已发布</option>
+        </select>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">保存</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="created">发布时间</label>
-                        <input id="created" class="form-control" name="createAt" type="datetime-local">
-                    </div>
-                    <div class="form-group">
-                        <label for="status">状态</label>
-                        <select id="status" class="form-control" name="state">
-              <option value="0">草稿</option>
-              <option value="1">已发布</option>
-            </select>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="submit">保存</button>
-                    </div>
-                </div>
-            </form>
+                </form>
+
+            </div>
+
         </div>
     </div>
 
@@ -122,10 +127,64 @@
 
     <script src="../assets/vendors/jquery/jquery.js"></script>
     <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
+    <!-- 分类选择模板 -->
     <script type="text/html" id="categorySelect">
         {{each categories}}
         <option value="{{$value._id}}">{{$value.title}}</option>
         {{/each}}
+    </script>
+    <!-- 编辑文章模板 -->
+    <script type="text/html" id="modifyTpl">
+        {{state}}
+        <div class="page-title">
+            <h1>编辑文章</h1>
+        </div>
+        <form class="row" id="modifyPost">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="title">标题</label>
+                    <input value="{{title}}" id="title" class="form-control input-lg" name="title" type="text" placeholder="文章标题">
+                </div>
+                <div class="form-group">
+                    <label for="content">文章内容</label>
+                    <textarea id="content" class="form-control input-lg" name="content" cols="30" rows="10" placeholder="内容">
+                        {{content}}
+                    </textarea>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="feature">文章封面</label>
+                    <!-- show when image chose -->
+                    <img id="preview" class="help-block thumbnail" style="display: {{thumbnail? 'block':'none'}} " src="{{thumbnail}}">
+                    <input id="feature" class="form-control" name="feature" type="file">
+                    <input type="hidden" id="thumbnail" name="thumbnail" value="{{thumbnail}}">
+                </div>
+                <div class="form-group">
+                    <label for="category">所属分类</label>
+                    <select id="category" class="form-control" name="category">
+                        {{each categories}}
+                        <option value="{{$value._id}}">{{$value.title}}</option>
+                        {{/each}}
+                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="created">发布时间</label>
+                    <input id="created" class="form-control" name="createAt" type="datetime-local" value="{{createAt.substr(0,19)}}">
+                </div>
+                <div class="form-group">
+                    <label for="status">状态</label>
+                    <select id="status" class="form-control" name="state">
+          <option value="0" {{state==0? 'selected':''}}>草稿</option>
+          <option value="1" {{state==1? 'selected':''}}>已发布</option>
+        </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">保存</button>
+                </div>
+            </div>
+        </form>
+
     </script>
     <script src="../assets/js/post-add.js"></script>
     <script>
