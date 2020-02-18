@@ -22,3 +22,13 @@ function dateformat(date) {
     date = new Date(date)
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
 }
+
+//显示当前登录用户信息
+$.ajax({
+    type: 'get',
+    url: '/users/' + userId,
+    success: function(res) {
+        $('.avatar').attr('src', res.avatar)
+        $('.profile .name').html(res.nickName)
+    }
+})
