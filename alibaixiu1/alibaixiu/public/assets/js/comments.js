@@ -32,3 +32,19 @@ function changePage(page) {
         }
     })
 }
+
+//审核模块点击功能
+$('#commentsList').on('click', '.edit', function() {
+    let id = $(this).data('id')
+    let state = $(this).data('status')
+    $.ajax({
+        type: 'put',
+        url: '/comments/' + id,
+        data: {
+            state: state ^= 1
+        },
+        success: function(param) {
+            location.reload()
+        }
+    })
+})

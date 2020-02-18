@@ -108,7 +108,7 @@
             <td>{{$imports.dateformat($value.createAt)}}</td>
             <td>{{$value.state == 0? '未批准':'已批准'}}</td>
             <td class="text-center">
-                <a href="post-add.html" class="edit btn btn-warning btn-xs" data-status="{{$value.state}}">{{$value.state == 0? '批准':'驳回'}}</a>
+                <a href="post-add.html" class="edit btn btn-warning btn-xs" data-status="{{$value.state}}" data-id="{{$value._id}}">{{$value.state == 0? '批准':'驳回'}}</a>
                 <a href="javascript:;" class="delete btn btn-danger btn-xs" data-id="{{$value._id}}">删除</a>
             </td>
         </tr>
