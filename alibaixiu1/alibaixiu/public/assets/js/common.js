@@ -1,3 +1,4 @@
+//定义退出登录模块
 $('#logoutBtn').on('click', function() {
     let isConfirm = confirm('您确定需要退出吗？')
     if (isConfirm) {
@@ -15,3 +16,9 @@ $('#logoutBtn').on('click', function() {
         })
     }
 })
+
+//定义时间处理函数
+function dateformat(date) {
+    date = new Date(date)
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+}

@@ -16,13 +16,6 @@ $.ajax({
     }
 })
 
-//定义时间处理函数
-function dateformat(date) {
-    date = new Date(date)
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
-}
-
-template.defaults.imports.dateformat = dateformat
 
 //定义翻页函数
 function onchangePage(page) {
