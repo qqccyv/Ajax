@@ -47,3 +47,17 @@ $.ajax({
         $('#slidesList').html(html)
     }
 })
+
+//轮播图删除
+$('#slidesList').on('click', '.delete', function() {
+    let id = $(this).data('id');
+    if (confirm('您确定要删除所选中的选项吗？')) {
+        $.ajax({
+            type: 'delete',
+            url: '/slides/' + id,
+            success: function() {
+                location.reload()
+            }
+        })
+    }
+})
