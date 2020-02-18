@@ -48,3 +48,18 @@ $('#commentsList').on('click', '.edit', function() {
         }
     })
 })
+
+//删除模块
+$('#commentsList').on('click', '.delete', function() {
+    let id = $(this).data('id')
+    if (confirm('您确定要删除所选择的选项吗？')) {
+        $.ajax({
+            type: 'delete',
+            url: '/comments/' + id,
+            success: function(param) {
+                location.reload()
+            }
+        })
+    }
+
+})
