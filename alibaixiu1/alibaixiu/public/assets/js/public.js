@@ -1,4 +1,9 @@
 jQuery || require('jquery')
+    //时间处理
+function dateformat(date) {
+    date = new Date(date)
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+}
 
 //定义公用组件  随机推荐
 $.ajax({
@@ -57,7 +62,44 @@ $.ajax({
 })
 
 
-function dateformat(date) {
-    date = new Date(date)
-    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+
+
+//定义侧边和顶部导航栏
+$.ajax({
+    type: 'get',
+    url: '/categories',
+    success: function(res) {
+        // console.log(res);
+        let navTpl = `
+        {{each data}}
+        <li><a href="/list.html?categoryId={{$value._id}}"><i class="fa {{$value.className}}"></i>{{$value.title}}</a></li>     
+        {{/each}}
+        `
+        let html = template.render(navTpl, {
+            data: res
+        })
+        $('#topNav').html(html)
+        $('#asideNav').html(html)
+    }
+})
+
+// 定义查询url参数的函数
+function getUrlParams(name) {
+    let paramsAray = location.search.substr(1).split('&')
+        // console.log(paramsAray);
+    for (let i = 0; i < paramsAray.length; i++) {
+        let temp = paramsAray[i].split('=')
+        if (temp[0] == name) {
+            return temp[1]
+        }
+    }
+    return -1
 }
+
+//搜索处理
+
+$('.search form').on('submit', function(e) {
+    e.preventDefault();
+    let keys = $(this).find('.keys').val()
+    location.href = `/search.html?keys=${keys}`
+})

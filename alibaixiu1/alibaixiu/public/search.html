@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="content">
-            <div class="panel new" id="listBox">
+            <div class="panel new" id="searchBox">
 
             </div>
         </div>
@@ -63,9 +63,9 @@
         </div>
     </div>
 </body>
-<script type="text/html" id="listTpl">
-    <h3>{{category.title}}</h3>
-    {{each res}}
+<script type="text/html" id="searchTpl">
+    <h3>搜索结果：</h3>
+    {{each data}}
     <div class="entry">
         <div class="head">
             <a href="/detail.html?id={{$value._id}}">{{$value.title}}</a>
@@ -81,7 +81,7 @@
                     <span>赞({{$value.meta.likes}})</span>
                 </a>
                 <a href="javascript:;" class="tags">
-    分类：<span>{{category.title}}</span>
+    分类：<span>{{title}}</span>
   </a>
             </p>
             <a href="/detail.html?id={{$value._id}}" class="thumb">
@@ -96,6 +96,6 @@
 <script src="./assets/vendors/nprogress/nprogress.js"></script>
 <link rel="stylesheet" href="./assets/vendors/nprogress/nprogress.css">
 <script src="./assets/js/public.js"></script>
-<script src="./assets/js/list.js"></script>
+<script src="./assets/js/search.js"></script>
 
 </html>
