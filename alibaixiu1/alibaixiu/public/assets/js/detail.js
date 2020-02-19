@@ -1,4 +1,16 @@
-//热门文章展示
+jQuery || require('jquery')
+let id = getUrlParams('id')
+$.ajax({
+        type: 'get',
+        url: '/posts/' + id,
+        success: function(res) {
+            let html = template('contentTpl', res)
+            console.log(html);
+
+            $('#contentBox').html(html)
+        }
+    })
+    //热门文章展示
 
 $.ajax({
     type: 'get',
