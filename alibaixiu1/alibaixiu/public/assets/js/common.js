@@ -24,6 +24,7 @@ function dateformat(date) {
 }
 
 //显示当前登录用户信息
+
 $.ajax({
     type: 'get',
     url: '/users/' + userId,
