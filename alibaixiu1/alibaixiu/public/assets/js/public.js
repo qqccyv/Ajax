@@ -25,3 +25,39 @@ $.ajax({
         $('#randomPosts').html(html)
     }
 })
+
+//最新评论展示
+$.ajax({
+    type: 'get',
+    url: '/comments/lasted',
+    success: function(res) {
+        // console.log(res);
+        let commentsTpl = `
+        {{each data}}
+        <li>
+            <a href="javascript:;">
+                <div class="avatar">
+                    <img src="{{$value.author.avatar}}" alt="">
+                </div>
+                <div class="txt">
+                    <p>
+                        <span>{{$value.author.nickName}}</span>{{$imports.dateformat($value.author.createTime)}}说:
+                    </p>
+                    <p>{{$value.content.substr(0,15)}}</p>
+                </div>
+            </a>
+        </li>
+        {{/each}}
+        `
+        let html = template.render(commentsTpl, {
+            data: res
+        })
+        $('#lastedComments').html(html)
+    }
+})
+
+
+function dateformat(date) {
+    date = new Date(date)
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+}

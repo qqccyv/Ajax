@@ -40,7 +40,7 @@ $.ajax({
     success: function(res) {
         // console.log(res);
         let recommendTpl = `
-        {{each data}}
+    {{each data}}   
     <li>
         <a href="/detail.html?id={{$value._id}}">
             <img src="{{$value.thumbnail}}" alt="">
@@ -75,5 +75,3 @@ function dateformat(date) {
     date = new Date(date)
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
 }
-
-//
