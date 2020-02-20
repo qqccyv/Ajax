@@ -5,7 +5,7 @@ $.ajax({
         url: '/posts/' + id,
         success: function(res) {
             let html = template('contentTpl', res)
-            console.log(html);
+                // console.log(html);
 
             $('#contentBox').html(html)
         }
